@@ -122,3 +122,75 @@ int main() {
     return 0;
 }
 
+//Задача 5
+#include <iostream>
+#include <limits> // Для использования std::numeric_limits
+using namespace std;
+
+const int MAX_SIZE = 100; // Максимальный размер массива, можно увеличить при необходимости
+
+void printArray(int arr[MAX_SIZE][MAX_SIZE], int n) {
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            cout << arr[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+
+void replaceMinWithZeroInColumns(int arr[MAX_SIZE][MAX_SIZE], int n) {
+    for (int j = 0; j < n; ++j) {
+        // Находим минимальный элемент в столбце j
+        int min_element = arr[0][j];
+        for (int i = 1; i < n; ++i) {
+            if (arr[i][j] < min_element) {
+                min_element = arr[i][j];
+            }
+        }
+        
+        // Заменяем минимальный элемент в столбце j на ноль
+        for (int i = 0; i < n; ++i) {
+            if (arr[i][j] == min_element) {
+                arr[i][j] = 0;
+                break; // Найден минимальный элемент, выходим из цикла
+            }
+        }
+    }
+}
+void swapRows(int arr[MAX_SIZE][MAX_SIZE], int row1, int row2, int n) {
+    for (int j = 0; j < n; ++j) {
+        int temp = arr[row1][j];
+        arr[row1][j] = arr[row2][j];
+        arr[row2][j] = temp;
+    }
+}
+
+int main() {
+    int n;
+    int arr[MAX_SIZE][MAX_SIZE];
+
+    // Ввод размерности массива
+    cout << "Введите размерность двумерного массива (n): ";
+    cin >> n;
+
+    // Ввод элементов массива
+    cout << "Введите элементы массива:" << endl;
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            cin >> arr[i][j];
+        }
+    }
+
+    // Заменяем минимальный элемент каждого столбца на ноль
+    replaceMinWithZeroInColumns(arr, n);
+
+    // Меняем местами первую и предпоследнюю строки
+    swapRows(arr, 0, n - 2, n);
+
+    // Выводим измененный массив
+    cout << "Массив после выполнения операций:" << endl;
+    printArray(arr, n);
+
+    return 0;
+}
+
