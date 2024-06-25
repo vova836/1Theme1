@@ -26,199 +26,27 @@ int main() {
 } 
 
 //Задача2.
-#include "stdio.h"
-#include "conio.h"
+#include <stdio.h>
+#include <conio.h>
+#include <cmath> // Для использования sqrt()
 
 int main() {
-    int numbers[5];
-    int max, middle;
+    float a, b, c, q;
+    printf("Введите длины сторон сундука (a, b, c): ");
+    scanf("%f %f %f", &a, &b, &c);
+    printf("Введите радиус отверстия q: ");
+    scanf("%f", &q);
 
-    // Ввод пяти различных целых чисел
-    printf("Введите пять различных целых чисел:\n");
-    for (int i = 0; i < 5; i++) {
-        printf("Число %d: ", i + 1);
-        scanf("%d", &numbers[i]);
+    // Вычисляем диагональ сундука
+    float d = sqrt(a * a + b * b + c * c);
+
+    // Проверяем условие прохождения
+    if (d <= 2 * q) {
+        printf("Сундук пройдет через отверстие.\n");
+    } else {
+        printf("Сундук не пройдет через отверстие.\n");
     }
 
-    // Сортировка массива для нахождения максимального и среднего значения
-    for (int i = 0; i < 4; i++) {
-        for (int j = i + 1; j < 5; j++) {
-            if (numbers[i] > numbers[j]) {
-                int temp = numbers[i];
-                numbers[i] = numbers[j];
-                numbers[j] = temp;
-            }
-        }
-    }
-
-    // Максимальное значение
-    max = numbers[4];
-
-    // Среднее значение (третье в отсортированном массиве)
-    middle = numbers[2];
-
-    // Разность между максимальным и средним значением
-    int difference = max - middle;
-
-    // Вывод результата
-    printf("Разность между максимальным и средним значением: %d\n", difference);
-
-    // Ожидание нажатия клавиши
-    getch();
-    return 0;
-} 
-
-//Задача3
-#include "stdio.h"
-#include "conio.h"
-#include "math.h"
-
-// Функция для проверки, является ли число простым
-bool isPrime(int n) {
-    if (n <= 1) return false;
-    if (n <= 3) return true;
-    if (n % 2 == 0 || n % 3 == 0) return false;
-    for (int i = 5; i * i <= n; i += 6) {
-        if (n % i == 0 || n % (i + 2) == 0) return false;
-    }
-    return true;
-}
-
-int main() {
-    // Перебор чисел от 200 до 500
-    printf("Числа из промежутка от 200 до 500 с ровно шестью делителями:\n");
-    for (int n = 200; n <= 500; n++) {
-        int count = 0;
-        for (int i = 1; i <= sqrt(n); i++) {
-            if (n % i == 0) {
-                if (n / i == i) // i является квадратным корнем из n
-                    count += 1;
-                else
-                    count += 2; // пара делителей (i и n/i)
-            }
-        }
-        if (count == 6) {
-            printf("%d\n", n);
-        }
-    }
-
-    // Ожидание нажатия клавиши
-    getch();
-    return 0;
-} 
-
-//Задача4
-#include "stdio.h"
-#include "conio.h"
-
-void rearrangeArray(int arr[], int n) {
-    int count = 0;  // Счетчик для подсчета нулевых элементов
-
-    // Перемещение всех нулевых элементов в начало массива
-    for (int i = 0; i < n; i++) {
-        if (arr[i] == 0) {
-            arr[count++] = 0;
-        }
-    }
-
-    // Заполнение оставшихся элементов в массиве ненулевыми значениями
-    for (int i = 0; i < n; i++) {
-        if (arr[i] != 0) {
-            arr[count++] = arr[i];
-        }
-    }
-}
-
-int main() {
-    int n;
-
-    // Ввод размера массива
-    printf("Введите размер массива: ");
-    scanf("%d", &n);
-
-    int arr[n];
-
-    // Ввод элементов массива
-    printf("Введите элементы массива:\n");
-    for (int i = 0; i < n; i++) {
-        scanf("%d", &arr[i]);
-    }
-
-    // Преобразование массива
-    rearrangeArray(arr, n);
-
-    // Вывод преобразованного массива
-    printf("Преобразованный массив:\n");
-    for (int i = 0; i < n; i++) {
-        printf("%d ", arr[i]);
-    }
-
-    // Ожидание нажатия клавиши
-    getch();
+    getch(); // Ждем нажатия клавиши перед выходом
     return 0;
 }
-
-//Задача5
-#include "stdio.h"
-#include "conio.h"
-
-#define MAX 100
-
-void replaceMaxElements(int arr[MAX][MAX], int n) {
-    for (int j = 0; j < n; j++) {
-        int maxIndex = 0;
-        // Найти максимальный элемент в столбце j
-        for (int i = 1; i < n; i++) {
-            if (arr[i][j] > arr[maxIndex][j]) {
-                maxIndex = i;
-            }
-        }
-        // Заменить максимальный элемент на заданное значение (например, 0)
-        arr[maxIndex][j] = 0;
-    }
-}
-
-void swapLastTwoColumns(int arr[MAX][MAX], int n) {
-    for (int i = 0; i < n; i++) {
-        int temp = arr[i][n - 1];
-        arr[i][n - 1] = arr[i][n - 2];
-        arr[i][n - 2] = temp;
-    }
-}
-
-void printArray(int arr[MAX][MAX], int n) {
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            printf("%d ", arr[i][j]);
-        }
-        printf("\n");
-    }
-}
-
-int main() {
-    int n;
-    int arr[MAX][MAX];
-
-    // Ввод размера массива
-    printf("Введите размер массива (n): ");
-    scanf("%d", &n);
-
-    // Ввод элементов массива
-    printf("Введите элементы массива:\n");
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            scanf("%d", &arr[i][j]);
-        }
-    }
-
-    // Замена максимальных элементов каждого столбца
-    replaceMaxElements(arr, n);
-
-    // Поменять местами последний и предпоследний столбцы
-    swapLastTwoColumns(arr, n);
-
-    // Вывод измененного массива
-    printf("Измененный массив:\n");
-    printArray(arr, n);
-
-    // Ожидание нажат
