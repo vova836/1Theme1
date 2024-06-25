@@ -157,3 +157,68 @@ int main() {
     getch();
     return 0;
 }
+
+//Задача5
+#include "stdio.h"
+#include "conio.h"
+
+#define MAX 100
+
+void replaceMaxElements(int arr[MAX][MAX], int n) {
+    for (int j = 0; j < n; j++) {
+        int maxIndex = 0;
+        // Найти максимальный элемент в столбце j
+        for (int i = 1; i < n; i++) {
+            if (arr[i][j] > arr[maxIndex][j]) {
+                maxIndex = i;
+            }
+        }
+        // Заменить максимальный элемент на заданное значение (например, 0)
+        arr[maxIndex][j] = 0;
+    }
+}
+
+void swapLastTwoColumns(int arr[MAX][MAX], int n) {
+    for (int i = 0; i < n; i++) {
+        int temp = arr[i][n - 1];
+        arr[i][n - 1] = arr[i][n - 2];
+        arr[i][n - 2] = temp;
+    }
+}
+
+void printArray(int arr[MAX][MAX], int n) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("%d ", arr[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int n;
+    int arr[MAX][MAX];
+
+    // Ввод размера массива
+    printf("Введите размер массива (n): ");
+    scanf("%d", &n);
+
+    // Ввод элементов массива
+    printf("Введите элементы массива:\n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            scanf("%d", &arr[i][j]);
+        }
+    }
+
+    // Замена максимальных элементов каждого столбца
+    replaceMaxElements(arr, n);
+
+    // Поменять местами последний и предпоследний столбцы
+    swapLastTwoColumns(arr, n);
+
+    // Вывод измененного массива
+    printf("Измененный массив:\n");
+    printArray(arr, n);
+
+    // Ожидание нажат
